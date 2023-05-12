@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_12_012420) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_12_012500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,10 +33,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_012420) do
   create_table "scores", force: :cascade do |t|
     t.bigint "team_id", null: false
     t.bigint "evaluation_item_id", null: false
+    t.bigint "vote_id", null: false
+    t.integer "point", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["evaluation_item_id"], name: "index_scores_on_evaluation_item_id"
     t.index ["team_id"], name: "index_scores_on_team_id"
+    t.index ["vote_id"], name: "index_scores_on_vote_id"
   end
 
   create_table "teams", force: :cascade do |t|
@@ -57,6 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_012420) do
   add_foreign_key "evaluation_items", "events"
   add_foreign_key "scores", "evaluation_items"
   add_foreign_key "scores", "teams"
+  add_foreign_key "scores", "votes"
   add_foreign_key "teams", "events"
   add_foreign_key "votes", "events"
 end

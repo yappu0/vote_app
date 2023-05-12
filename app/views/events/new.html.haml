@@ -1,8 +1,7 @@
-- if @event.errors.any?
-  #error_explanation
-    %ul
-      - @event.errors.full_messages.each do |message|
-        %li= message
+- if @event.errors.present?
+  %ul
+    - @event.errors.full_messages.each do |message|
+      %li= message
 
 .w-full.max-w-xs{date_controller: 'events'}
   = form_with model: @event, url: events_path, class: 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4', id: 'event-form' do |f|

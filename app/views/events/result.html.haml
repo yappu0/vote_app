@@ -1,1 +1,12 @@
 %h1 結果画面
+
+- @event.teams.each do |team|
+  .mb-6
+    %p.text-3xl= team.name
+    %p
+      合計得点:
+      = team.scores.sum(:point)
+    %ul
+      - @event.evaluation_items.each do |evaluation_item|
+        %li= evaluation_item.name
+        %li= evaluation_item.scores.where(team:).sum(:point)

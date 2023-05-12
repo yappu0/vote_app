@@ -1,14 +1,17 @@
 .w-full
-  - @event.teams.each do |team|
-    .mb-6
-      %p.text-3xl= team.name
-      - @event.evaluation_items.each do |evaluation_item|
-        %p= evaluation_item.name
-        = button_to 'プラス', event_scores_path(@event), {params: {evaluation_item_id: evaluation_item.id, team_id: team.id}, class: 'plus', method: :post}
-        - if team.scores.where(evaluation_item:).exists?
-          = button_to 'マイナス', event_score_path(@event, team.scores.where(evaluation_item:).last), {params: {evaluation_item_id: evaluation_item.id, team_id: team.id}, class: 'minus', method: :delete}
-        - else
-          %button マイナス
+  - if @event.errors.present?
+    %ul
+      - @vote.errors.full_messages.each do |message|
+        %li= message
+  = form_with model: @vote, url: event_votes_path(@event), class: 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' do |f|
+    - @event.teams.each do |team|
+      .mb-6
+        %p.text-3xl= team.name
+        - @event.evaluation_items.each do |evaluation_item|
+          %p= evaluation_item.name
+          = f.fields_for :scores, @vote.scores.build  do |score|
+            = score.hidden_field :team_id, value: team.id
+            = score.hidden_field :evaluation_item_id, value: evaluation_item.id
+            = score.number_field :point, min: 0
 
-  -# 投票ボタン押したらscoreが保存されるようにしないといけない
-  = button_to '投票する', event_votes_path(@event)
+    = f.submit "投票", class: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none cursor-pointer dark:focus:ring-blue-800'

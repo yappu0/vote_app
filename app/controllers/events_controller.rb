@@ -10,8 +10,8 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
-    @event.teams = params[:event][:teams].split(' ').map { |team_name| Team.new(name: team_name) }
-    @event.evaluation_items = params[:event][:evaluation_items].split(' ').map { |item_name| EvaluationItem.new(name: item_name) }
+    @event.teams = params[:event][:teams].split(' ').map { |name| Team.new(name:) }
+    @event.evaluation_items = params[:event][:evaluation_items].split(' ').map { |name| EvaluationItem.new(name:) }
 
     if @event.save
       redirect_to event_path(@event), notice: t('controllers.created')
