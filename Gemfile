@@ -13,10 +13,12 @@ gem "stimulus-rails"
 gem "cssbundling-rails"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
+gem 'hamlit-rails'
 
 group :development, :test do
 end
 
 group :development do
   gem "web-console"
+  gem 'html2haml'
 end
