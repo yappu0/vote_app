@@ -1,5 +1,9 @@
 %h1 結果画面
 
+%p
+  回答人数
+  = @event.votes.count
+
 - @event.teams.each do |team|
   .mb-6
     %p.text-3xl= team.name

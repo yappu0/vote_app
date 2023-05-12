@@ -1,4 +1,7 @@
-%p= @event.name
+%p.text-3xl= @event.name
+%p
+  回答人数
+  = @event.votes.count
 
 = image_tag "data:image/png;base64,#{generate_qr_code(new_event_vote_url(@event))}"
 = link_to new_event_vote_url(@event), new_event_vote_url(@event)
