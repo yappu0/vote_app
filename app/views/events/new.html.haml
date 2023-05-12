@@ -1,34 +1,31 @@
-- @evaluation_item = @event.evaluation_items.build
-- @team = @event.teams.build
-
 - if @event.errors.any?
   #error_explanation
     %ul
       - @event.errors.full_messages.each do |message|
         %li= message
 
-.w-full.max-w-xs
-  = form_with model: @event, url: events_path, class: 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4' do |f|
+.w-full.max-w-xs{date_controller: 'events'}
+  = form_with model: @event, url: events_path, class: 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4', id: 'event-form' do |f|
     .mb-4
       = f.label :name, "イベント名", class: 'block text-gray-700 text-sm font-bold mb-2'
       = f.text_field :name, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
 
     .mb-4
       = f.label :password, "パスワード", class: 'block text-gray-700 text-sm font-bold mb-2'
-      = f.text_field :password, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      = f.password_field :password, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
 
     .mb-4
       = f.label :point, "持ち点", class: 'block text-gray-700 text-sm font-bold mb-2'
-      = f.text_field :point, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      = f.number_field :point, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
 
     .mb-4
-      = f.fields_for :teams, @team do |team|
-        = team.label :name, "チーム名", class: 'block text-gray-700 text-sm font-bold mb-2'
-        = team.text_field :name, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      %label.block.text-gray-700.text-sm.font-bold.mb-2{ for: 'teams' } チーム名
+      .taggle#teams-input
+      = f.hidden_field :teams
 
     .mb-4
-      = f.fields_for :evaluation_items, @evaluation_item do |item|
-        = item.label :name, "評価項目", class: 'block text-gray-700 text-sm font-bold mb-2'
-        = item.text_field :name, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      %label.block.text-gray-700.text-sm.font-bold.mb-2{ for: 'evaluation_items' } 評価項目
+      .taggle#evaluation-items-input
+      = f.hidden_field :evaluation_items
 
-    = f.submit "イベントを作成", class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+    = f.submit "イベントを作成", class: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none cursor-pointer dark:focus:ring-blue-800'

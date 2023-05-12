@@ -1,9 +1,7 @@
 class Event < ApplicationRecord
   has_many :teams, dependent: :destroy
   has_many :evaluation_items, dependent: :destroy
-  has_one :vote, dependent: :destroy
-
-  accepts_nested_attributes_for :teams, :evaluation_items
+  has_many :votes, dependent: :destroy
 
   validates :name, presence: true
   validates :password, presence: true

@@ -70,6 +70,7 @@ GEM
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    chunky_png (1.4.0)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
     cssbundling-rails (1.1.2)
@@ -165,6 +166,13 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    rqrcode (2.1.2)
+      chunky_png (~> 1.0)
+      rqrcode_core (~> 1.0)
+    rqrcode_core (1.2.0)
+    rqrcode_png (0.1.5)
+      chunky_png
+      rqrcode
     ruby_parser (3.20.0)
       sexp_processor (~> 4.16)
     sexp_processor (4.17.0)
@@ -203,6 +211,8 @@ DEPENDENCIES
   propshaft
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  rqrcode
+  rqrcode_png
   stimulus-rails
   turbo-rails
   tzinfo-data

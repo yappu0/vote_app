@@ -10,10 +10,22 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
+    @event.teams = params[:event][:teams].split(' ').map { |team_name| Team.new(name: team_name) }
+    @event.evaluation_items = params[:event][:evaluation_items].split(' ').map { |item_name| EvaluationItem.new(name: item_name) }
+
     if @event.save
       redirect_to event_path(@event), notice: t('controllers.created')
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def result
+    @event = Event.find(params[:event_id])
+    if @event.password == params[:password]
+      render :result
+    else
+      redirect_to event_path(@event), notice: "パスワードが正しくありません。再度入力してください。"
     end
   end
 
@@ -24,10 +36,6 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(
-      :name, :password, :point,
-      teams_attributes: [:name],
-      evaluation_items_attributes: [:name],
-    )
+    params.require(:event).permit(:name, :password, :point)
   end
 end

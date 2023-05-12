@@ -49,20 +49,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_012420) do
 
   create_table "votes", force: :cascade do |t|
     t.bigint "event_id", null: false
-    t.bigint "team_id", null: false
-    t.bigint "evaluation_item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["evaluation_item_id"], name: "index_votes_on_evaluation_item_id"
     t.index ["event_id"], name: "index_votes_on_event_id"
-    t.index ["team_id"], name: "index_votes_on_team_id"
   end
 
   add_foreign_key "evaluation_items", "events"
   add_foreign_key "scores", "evaluation_items"
   add_foreign_key "scores", "teams"
   add_foreign_key "teams", "events"
-  add_foreign_key "votes", "evaluation_items"
   add_foreign_key "votes", "events"
-  add_foreign_key "votes", "teams"
 end
