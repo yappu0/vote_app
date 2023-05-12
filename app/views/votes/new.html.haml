@@ -4,11 +4,11 @@
       %p.text-3xl= team.name
       - @event.evaluation_items.each do |evaluation_item|
         %p= evaluation_item.name
-        .score 0
         = button_to 'プラス', event_scores_path(@event), {params: {evaluation_item_id: evaluation_item.id, team_id: team.id}, class: 'plus', method: :post}
         - if team.scores.where(evaluation_item:).exists?
           = button_to 'マイナス', event_score_path(@event, team.scores.where(evaluation_item:).last), {params: {evaluation_item_id: evaluation_item.id, team_id: team.id}, class: 'minus', method: :delete}
         - else
           %button マイナス
 
+  -# 投票ボタン押したらscoreが保存されるようにしないといけない
   = button_to '投票する', event_votes_path(@event)
