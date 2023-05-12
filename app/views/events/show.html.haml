@@ -1,0 +1,17 @@
+%p
+  イベント名
+  = @event.name
+%p
+  パスワード
+  = @event.password
+%p
+  持ち点
+  = @event.point
+%p
+  参加チーム
+  - @event.teams.each do |team|
+    = team.name
+%p
+  評価項目
+  - @event.evaluation_items.each do |evaluation_item|
+    = evaluation_item.name
