@@ -1,44 +1,31 @@
 // Entry point for the build script in your package.json
-import "@hotwired/turbo-rails"
-import "./controllers"
-import Taggle from 'taggle';
+import "@hotwired/turbo-rails";
+import "./controllers";
 import $ from 'jquery';
+import Taggle from 'taggle';
 
-document.addEventListener("turbo:render", function () {
-  function updateHiddenField(taggle, hiddenField) {
-    let tags = taggle.getTags().values;
-    hiddenField.val(tags.join(" "));
+$(window).on("turbo:render turbo:load", () => {
+  const updateHiddenField = (taggle, hiddenField) => {
+    hiddenField.val(taggle.getTags().values.join(" "));
   }
 
-  let teamsTaggle = new Taggle("teams-input", {
+  const teamsTaggle = new Taggle("teams-input", {
     delimiter: " ",
-    onTagAdd: function (event, tag) {
+    onTagAdd: () => {
       updateHiddenField(teamsTaggle, $("#event_teams"));
     },
-    onTagRemove: function (event, tag) {
+    onTagRemove: () => {
       updateHiddenField(teamsTaggle, $("#event_teams"));
     },
   });
 
-  let evaluationItemsTaggle = new Taggle("evaluation-items-input", {
+  const evaluationItemsTaggle = new Taggle("evaluation-items-input", {
     delimiter: " ",
-    onTagAdd: function (event, tag) {
+    onTagAdd: () => {
       updateHiddenField(evaluationItemsTaggle, $("#event_evaluation_items"));
     },
-    onTagRemove: function (event, tag) {
+    onTagRemove: () => {
       updateHiddenField(evaluationItemsTaggle, $("#event_evaluation_items"));
     },
-  });
-
-  $(".plus").on("click", function () {
-    let currentScore = parseInt($("#score").text(), 10);
-    $(".score").text(currentScore + 1);
-  });
-
-  $(".minus").on("click", function () {
-    let currentScore = parseInt($("#score").text(), 10);
-    if (currentScore > 0) {
-      $(".score").text(currentScore - 1);
-    }
   });
 });
