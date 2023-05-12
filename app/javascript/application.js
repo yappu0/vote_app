@@ -4,7 +4,7 @@ import "./controllers";
 import $ from 'jquery';
 import Taggle from 'taggle';
 
-$(window).on("turbo:render turbo:load", () => {
+$(window).on("turbo:load", () => {
   const updateHiddenField = (taggle, hiddenField) => {
     hiddenField.val(taggle.getTags().values.join(" "));
   }
